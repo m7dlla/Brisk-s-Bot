@@ -1,44 +1,5 @@
 import { logger } from '../utils/logger.js';
 
-import { BotConfig } from "./config.js";
-
-// =========================
-// SEND VERIFY MESSAGE ON JOIN
-// =========================
-client.on("guildMemberAdd", async (member) => {
-  try {
-    const channelId = BotConfig.welcome.defaultWelcomeChannel;
-
-    if (!channelId) return;
-
-    const channel = member.guild.channels.cache.get(channelId);
-    if (!channel) return;
-
-    // Send verification message
-    const message = await channel.send({
-      content: BotConfig.verification.defaultMessage
-        .replace("{user}", `<@${member.id}>`)
-        .replace("{server}", member.guild.name)
-        .replace("{memberCount}", member.guild.memberCount),
-      components: [
-        {
-          type: 1,
-          components: [
-            {
-              type: 2,
-              style: 1,
-              label: BotConfig.verification.defaultButtonText,
-              custom_id: "verify_button",
-            },
-          ],
-        },
-      ],
-    });
-  } catch (err) {
-    console.error("Error sending verify message:", err);
-  }
-});
-
 export const botConfig = {
   // =========================
   // BOT PRESENCE (what users see under the bot name)
